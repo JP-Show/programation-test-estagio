@@ -6,7 +6,6 @@ export class ArabicNumerals {
   }
 
   private verifyNumber(value: number): string {
-    console.log(value)
     switch (value) {
       case 1:
         return 'I'

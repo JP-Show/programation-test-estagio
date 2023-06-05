@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { RomanNumeral } from '../../class/RomanNumerals'
 import { ArabicNumerals } from '../../class/ArabicNumerals'
+import { NounGrind } from '../../components/NounGrid'
 export function Home() {
   const [romanNumber, setRomanNumber] = useState<string>('')
   const [number, setNumber] = useState<number>(0)
@@ -39,6 +40,7 @@ export function Home() {
       />
       <button onClick={showConvertRoman}>Converter</button>
       <p>{roman}</p>
+      <NounGrind></NounGrind>
     </div>
   )
 }

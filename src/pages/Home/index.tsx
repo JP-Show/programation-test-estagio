@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import { RomanNumeral } from '../../class/RomanNumerals'
-import { ArabicNumerals } from '../../class/ArabicNumerals'
+import { RomanNumeral } from '../../class/services/RomanNumerals'
+import { ArabicNumerals } from '../../class/services/ArabicNumerals'
 import { NounGrid } from '../../components/NounGrid'
 export function Home() {
   const [romanNumber, setRomanNumber] = useState<string>('')

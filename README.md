@@ -2,7 +2,7 @@
 
 Para executar com sucesso esse projetinho, precisa:
 
-`-node.js/npm`
+- node.js/npm
 
 a versão que usei para esse projeto foi o node v16.14.0 e o npm 8.3.1
 Depois que clonar o projeto ou baixar, vai iniciar abrir um cmd ou no próprio console do vscode (claro, você precisa estar dentro da pasta) você vai usar

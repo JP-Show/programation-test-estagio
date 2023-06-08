@@ -1,4 +1,4 @@
-interface TCanvas {
+export interface TCanvas {
   canvas: HTMLCanvasElement | null
   ctx: CanvasRenderingContext2D
   width: number
@@ -26,23 +26,47 @@ interface TCanvas {
   clear(cl: string): void
 }
 
-class Canvas {
-  private canvas: HTMLCanvasElement | null
-  private ctx: CanvasRenderingContext2D
-  private width: number
-  private height: number
+export class Canvas {
+  private _canvas: HTMLCanvasElement | null
+  private _ctx: CanvasRenderingContext2D
+  private _width: number
+  private _height: number
+
   constructor(
-    canvas: HTMLCanvasElement | null,
+    canvas: HTMLCanvasElement,
     ctx: CanvasRenderingContext2D,
     width: number,
     height: number
   ) {
-    this.canvas = canvas
-    this.ctx = ctx
-    this.width = width
-    this.height = height
+    this._canvas = canvas
+    this._ctx = ctx
+    this._width = width
+    this._height = height
   }
-
+  public get canvas(): HTMLCanvasElement | null {
+    return this._canvas
+  }
+  public set canvas(value: HTMLCanvasElement | null) {
+    this._canvas = value
+  }
+  public get ctx(): CanvasRenderingContext2D {
+    return this._ctx
+  }
+  public set ctx(value: CanvasRenderingContext2D) {
+    this._ctx = value
+  }
+  public get width(): number {
+    return this._width
+  }
+  public set width(value: number) {
+    this._width = value
+  }
+  public get height(): number {
+    return this._height
+  }
+  public set height(value: number) {
+    this._height = value
+  }
   public createSquare(
     x: number,
     y: number,
@@ -52,10 +76,10 @@ class Canvas {
     clFill: string
   ): void {
     try {
-      this.ctx.fillStyle = clFill
-      this.ctx.strokeStyle = clBorder
-      this.ctx.fillRect(x, y, w, h)
-      this.ctx.strokeRect(x, y, w, h)
+      this._ctx.fillStyle = clFill
+      this._ctx.strokeStyle = clBorder
+      if (clFill) this._ctx.fillRect(x, y, w, h)
+      if (clBorder) this._ctx.strokeRect(x, y, w, h)
     } catch (err) {
       throw 'Error context ' + err
     }
@@ -70,20 +94,20 @@ class Canvas {
       cl = cl
       weight = weight
       let w: number = weight / 2
-      this.ctx.fillStyle = cl
-      this.ctx.fillRect(x - w, y - w, weight, weight)
+      this._ctx.fillStyle = cl
+      this._ctx.fillRect(x - w, y - w, weight, weight)
     } catch (err) {
       throw 'point error ' + err
     }
   }
   public createLine(x1: number, y1: number, x2: number, y2: number): void {
     try {
-      this.ctx.strokeStyle = 'black'
-      this.ctx.beginPath()
-      this.ctx.moveTo(x1, y1)
-      this.ctx.lineTo(x2, y2)
-      this.ctx.closePath()
-      this.ctx.stroke()
+      this._ctx.strokeStyle = 'black'
+      this._ctx.beginPath()
+      this._ctx.moveTo(x1, y1)
+      this._ctx.lineTo(x2, y2)
+      this._ctx.closePath()
+      this._ctx.stroke()
     } catch (err) {
       throw 'line error ' + err
     }
@@ -97,14 +121,14 @@ class Canvas {
     fill: string
   ): void {
     try {
-      this.ctx.fillStyle = cl
-      this.ctx.strokeStyle = cl
+      this._ctx.fillStyle = cl
+      this._ctx.strokeStyle = cl
       const width = x2 - x1
       const height = y2 - y1
       if (fill) {
-        this.ctx.fillRect(x1, y1, width, height)
+        this._ctx.fillRect(x1, y1, width, height)
       } else {
-        this.ctx.strokeRect(x1, y1, width, height)
+        this._ctx.strokeRect(x1, y1, width, height)
       }
     } catch (err) {
       throw 'circ error ' + err
@@ -112,9 +136,9 @@ class Canvas {
   }
   public clear(cl: string): void {
     if (cl) {
-      this.createSquare(0, 0, this.width, this.height, cl, cl)
+      this.createSquare(0, 0, this._width, this._height, cl, cl)
     } else {
-      this.ctx.clearRect(0, 0, this.width, this.height)
+      this._ctx.clearRect(0, 0, this._width, this._height)
     }
   }
 }

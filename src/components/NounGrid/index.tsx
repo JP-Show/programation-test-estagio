@@ -5,8 +5,8 @@ import { Canvas } from '../../class/entities/Canvas'
 
 export function NounGrid() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
-
   const gameOfLifeRef = useRef<GameOfLife | null>(null)
+  let intervalGame: number | null = null
 
   function handleMouse(e: React.MouseEvent<HTMLCanvasElement, MouseEvent>) {
     if (gameOfLifeRef.current) {
@@ -16,7 +16,8 @@ export function NounGrid() {
       const noun: TNoun = {
         alive: 1,
         x,
-        y
+        y,
+        next: 0
       }
       gameOfLifeRef.current.addNoun(noun)
     }
@@ -24,9 +25,20 @@ export function NounGrid() {
 
   function executeGameOfLife() {
     if (gameOfLifeRef.current) {
-      console.log(gameOfLifeRef.current)
-      console.log(gameOfLifeRef.current.boardSize)
       gameOfLifeRef.current.runGame()
+    }
+  }
+  function runGame() {
+    intervalGame = setInterval(() => {
+      if (gameOfLifeRef.current) {
+        gameOfLifeRef.current.runGame()
+      }
+    }, 100)
+  }
+  function stopGame() {
+    if (intervalGame) {
+      clearInterval(intervalGame)
+      intervalGame = null
     }
   }
   useEffect(() => {
@@ -54,7 +66,8 @@ export function NounGrid() {
         id="canvasRef"
         className="nounScreen"
       ></canvas>
-      <button onClick={executeGameOfLife}></button>
+      <button onClick={runGame}> RUN</button>
+      <button onClick={stopGame}> STOP</button>
     </>
   )
 }
